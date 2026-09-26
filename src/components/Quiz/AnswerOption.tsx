@@ -64,11 +64,11 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({
       type="button"
       onClick={() => onSelect(index)}
       disabled={disabled}
-      className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-150 flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFC] ${cardStyle} ${
+      className={`w-full text-left p-3.5 sm:p-5 rounded-2xl border-2 transition-all duration-150 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CFC] select-none touch-manipulation active:scale-[0.98] min-h-[52px] sm:min-h-[56px] ${cardStyle} ${
         disabled && !isAnswerSubmitted ? 'cursor-not-allowed opacity-60' : ''
       }`}
     >
-      <div className="flex items-center gap-3.5 sm:gap-4 flex-1">
+      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
         {/* Letter Badge */}
         <div
           className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 transition-colors ${badgeStyle}`}
@@ -77,7 +77,7 @@ export const AnswerOption: React.FC<AnswerOptionProps> = ({
         </div>
 
         {/* Option Text */}
-        <span className="text-sm sm:text-base font-semibold leading-snug">
+        <span className="text-sm sm:text-base font-semibold leading-snug break-words">
           {text}
         </span>
       </div>

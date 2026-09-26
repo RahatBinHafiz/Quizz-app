@@ -50,7 +50,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
   return (
     <button
       onClick={() => onSelect(category.name)}
-      className="group text-left w-full bg-white hover:bg-[#FFFDF7] p-5 rounded-2xl border border-[#7C5CFC]/15 hover:border-[#7C5CFC] shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden flex flex-col justify-between min-h-[140px] cursor-pointer"
+      className="group text-left w-full bg-white hover:bg-[#FFFDF7] p-4 sm:p-5 rounded-2xl border border-[#7C5CFC]/15 hover:border-[#7C5CFC] shadow-sm hover:shadow-md transition-all duration-200 relative overflow-hidden flex flex-col justify-between min-h-[135px] sm:min-h-[140px] cursor-pointer touch-manipulation select-none active:scale-[0.98]"
     >
       {/* Accent corner tag */}
       <div className="absolute top-0 right-0 w-16 h-16 bg-[#FFF4C2]/40 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110" />

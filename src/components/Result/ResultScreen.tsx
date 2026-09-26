@@ -87,8 +87,8 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
     circumference - (result.scorePercentage / 100) * circumference;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <div className="bg-white rounded-3xl border border-[#7C5CFC]/15 p-6 sm:p-10 shadow-sm relative overflow-hidden text-center">
+    <div className="max-w-2xl mx-auto px-3.5 sm:px-6 py-5 sm:py-12 pb-24 md:pb-12">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#7C5CFC]/15 p-4 sm:p-10 shadow-sm relative overflow-hidden text-center">
         {/* Soft background accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#FFF4C2]/40 rounded-full blur-3xl pointer-events-none" />
 
@@ -212,10 +212,10 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3">
             <button
               onClick={onReviewAnswers}
-              className="w-full sm:w-auto px-6 py-3.5 text-sm font-bold text-white bg-[#7C5CFC] hover:bg-[#6949EB] active:scale-95 rounded-xl shadow-md shadow-[#7C5CFC]/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-bold text-white bg-[#7C5CFC] hover:bg-[#6949EB] active:scale-95 rounded-xl shadow-md shadow-[#7C5CFC]/25 transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]"
             >
               <BookOpen className="w-4 h-4" />
               <span>Review Answers</span>
@@ -223,7 +223,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
 
             <button
               onClick={onTryAgain}
-              className="w-full sm:w-auto px-6 py-3.5 text-sm font-bold text-[#34245C] bg-[#FFF4C2] hover:bg-[#ffeaa0] active:scale-95 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-bold text-[#34245C] bg-[#FFF4C2] hover:bg-[#ffeaa0] active:scale-95 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Try Again</span>
@@ -231,7 +231,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
 
             <button
               onClick={onBackToHome}
-              className="w-full sm:w-auto px-6 py-3.5 text-sm font-bold text-[#817A91] hover:text-[#34245C] bg-[#F0EBFF] hover:bg-[#e4dcff] active:scale-95 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm font-bold text-[#817A91] hover:text-[#34245C] bg-[#F0EBFF] hover:bg-[#e4dcff] active:scale-95 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]"
             >
               <Home className="w-4 h-4" />
               <span>Back to Home</span>

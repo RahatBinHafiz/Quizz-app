@@ -212,29 +212,31 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF7] text-[#2D2640] flex flex-col font-sans">
-      {/* Navbar with 3-Zone Contract */}
-      <Navbar
-        currentTab={navTab}
-        onSelectTab={handleNavSelect}
-        onQuickStart={handleQuickStart}
-        onOpenQuestionBank={() => setIsBankOpen(true)}
-      />
+      {/* Navbar with 3-Zone Contract (hidden during active quiz for distraction-free focus mode) */}
+      {currentScreen !== 'quiz' && (
+        <Navbar
+          currentTab={navTab}
+          onSelectTab={handleNavSelect}
+          onQuickStart={handleQuickStart}
+          onOpenQuestionBank={() => setIsBankOpen(true)}
+        />
+      )}
 
       {/* Main Content Area */}
       <main className="flex-1">
         {/* SCREEN 1: HOME */}
         {currentScreen === 'home' && (
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-10">
+          <div className="max-w-6xl mx-auto px-3.5 sm:px-6 py-4 sm:py-10 space-y-7 sm:space-y-10 pb-24 md:pb-10">
             {/* Top Brand Subtitle & Welcome Card */}
             <div>
-              <div className="text-center mb-8">
-                <span className="text-xs font-bold text-[#7C5CFC] uppercase tracking-widest block mb-1">
+              <div className="text-center mb-6 sm:mb-8">
+                <span className="text-[11px] sm:text-xs font-bold text-[#7C5CFC] uppercase tracking-widest block mb-1">
                   Interactive Knowledge Hub
                 </span>
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-[#34245C] tracking-tight">
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-[#34245C] tracking-tight">
                   MCQ MASTER
                 </h1>
-                <p className="text-sm sm:text-base font-medium text-[#817A91] mt-1">
+                <p className="text-xs sm:text-base font-medium text-[#817A91] mt-0.5 sm:mt-1">
                   Test your knowledge. Learn something new.
                 </p>
               </div>
@@ -250,41 +252,41 @@ export default function App() {
             </div>
 
             {/* Featured Biology 40-Question Set Card */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#FFF4C2]/50 via-white to-[#F0EBFF]/60 border-2 border-[#7C5CFC]/25 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-start sm:items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/20">
-                  <span className="text-2xl">🧬</span>
+            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#FFF4C2]/50 via-white to-[#F0EBFF]/60 border-2 border-[#7C5CFC]/25 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/20">
+                  <span className="text-xl sm:text-2xl">🧬</span>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[11px] font-bold">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
+                    <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
                       সম্পূর্ণ ৪০টি প্রশ্ন
                     </span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[11px] font-bold font-mono-numbers flex items-center gap-1">
+                    <span className="px-2 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
                       ⏱ ৪০ মিনিট (40 Mins)
                     </span>
-                    <span className="text-xs text-[#817A91] hidden sm:inline">অধ্যায় ১: কোষ ও এর গঠন</span>
+                    <span className="text-[11px] sm:text-xs text-[#817A91] hidden sm:inline">অধ্যায় ১: কোষ ও এর গঠন</span>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#34245C]">
+                  <h3 className="text-base sm:text-xl font-bold text-[#34245C] leading-snug">
                     জীববিজ্ঞান: কোষ ও কোষের গঠন (All 40 Biology Questions)
                   </h3>
-                  <p className="text-xs text-[#817A91] mt-0.5">
+                  <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
                     রবার্ট হুকের আবিষ্কার থেকে শুরু করে প্লাজমা মেমব্রেন, প্লাজমোডেজমাটা এবং সেকেন্ডারি প্রাচীর পর্যন্ত।
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 w-full md:w-auto shrink-0">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0">
                 <button
                   onClick={handleStartAllBiology}
-                  className="flex-1 md:flex-initial px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                  className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
                 >
                   <span>Start All 40 Questions</span>
                   <span aria-hidden="true">→</span>
                 </button>
                 <button
                   onClick={() => handleSelectCategory('Biology')}
-                  className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap"
+                  className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
                 >
                   <span>Customize</span>
                 </button>

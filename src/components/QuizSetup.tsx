@@ -77,18 +77,18 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <div className="max-w-3xl mx-auto px-3.5 sm:px-6 py-4 sm:py-8 pb-20 md:pb-8">
       {/* Back button */}
       <button
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#817A91] hover:text-[#34245C] mb-6 transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#817A91] hover:text-[#34245C] mb-4 sm:mb-6 transition-colors cursor-pointer touch-manipulation"
       >
         <ChevronLeft className="w-4 h-4" />
         <span>Back to Home</span>
       </button>
 
       {/* Main Container */}
-      <div className="bg-white rounded-3xl border border-[#7C5CFC]/15 p-6 sm:p-8 lg:p-10 shadow-sm relative overflow-hidden">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#7C5CFC]/15 p-4 sm:p-8 lg:p-10 shadow-sm relative overflow-hidden">
         {/* Subtle accent glow */}
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#FFF4C2]/30 rounded-bl-full pointer-events-none" />
 
@@ -402,7 +402,7 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
 
           <button
             onClick={handleStart}
-            className="w-full sm:w-auto px-8 py-3.5 text-base font-bold text-white bg-[#7C5CFC] hover:bg-[#6949EB] active:scale-98 rounded-xl shadow-md shadow-[#7C5CFC]/25 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 text-base font-bold text-white bg-[#7C5CFC] hover:bg-[#6949EB] active:scale-95 rounded-xl shadow-md shadow-[#7C5CFC]/25 transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer touch-manipulation min-h-[48px]"
           >
             <span>Start Quiz</span>
             <ArrowRight className="w-4 h-4" />
