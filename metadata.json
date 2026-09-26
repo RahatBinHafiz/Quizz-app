@@ -1,0 +1,6 @@
+{
+  "name": "MCQ Master - Interactive Quiz Platform",
+  "description": "A modern, responsive multiple-choice quiz platform with instant feedback, categorized question banks, performance analytics, and comprehensive answer reviews.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
