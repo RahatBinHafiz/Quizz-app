@@ -29,25 +29,27 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const availableCount = totalAvailableInCategory(selectedCategory);
   
-  // Default to 40 for Biology (or availableCount if smaller), otherwise 10
+  // Default to 50 for Biology (or availableCount if smaller), otherwise 10
   const [questionCount, setQuestionCount] = useState<number>(() => {
-    if (initialCategory === 'Biology') return 40;
+    if (initialCategory === 'Biology') return 50;
     return 10;
   });
   const [difficulty, setDifficulty] = useState<Difficulty>('Mixed');
-  const [timerOption, setTimerOption] = useState<number | null>(40); // Default timer: 40 minutes
-  const [customMinutes, setCustomMinutes] = useState<number>(40);
+  const [timerOption, setTimerOption] = useState<number | null>(() => {
+    return initialCategory === 'Biology' ? 50 : 30;
+  }); // Default timer: 50 minutes for Biology 50 Qs
+  const [customMinutes, setCustomMinutes] = useState<number>(50);
   const [instantFeedback, setInstantFeedback] = useState<boolean>(false); // Default to Real Exam Mode (no premature answers)
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(false);
 
-  // Dynamic question counts including 40
-  const baseCountOptions = [10, 20, 30, 40];
+  // Dynamic question counts including 50
+  const baseCountOptions = [10, 20, 30, 40, 50];
   const difficultyOptions: Difficulty[] = ['Easy', 'Medium', 'Hard', 'Mixed'];
   const timerPresets = [
-    { label: '40 Mins (Default)', value: 40 },
+    { label: '50 Mins (Default)', value: 50 },
+    { label: '40 Mins', value: 40 },
     { label: '30 Mins', value: 30 },
     { label: '20 Mins', value: 20 },
-    { label: '50 Mins', value: 50 },
     { label: 'No Timer', value: null },
     { label: 'Custom', value: -1 },
   ];
@@ -56,9 +58,9 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
     setSelectedCategory(catName);
     const count = totalAvailableInCategory(catName);
     if (catName === 'Biology') {
-      setQuestionCount(40);
+      setQuestionCount(50);
       setShuffleQuestions(false);
-      setTimerOption(40);
+      setTimerOption(50);
     } else if (questionCount > count) {
       setQuestionCount(count);
     }
@@ -349,7 +351,7 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
                   <input
                     type="range"
                     min="5"
-                    max="120"
+                    max="180"
                     step="5"
                     value={customMinutes}
                     onChange={(e) => setCustomMinutes(Number(e.target.value))}

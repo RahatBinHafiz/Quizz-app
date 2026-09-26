@@ -283,10 +283,10 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
       {/* Overview Grid Drawer / Modal */}
       {isGridModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-md w-full p-5 sm:p-6 pb-safe border border-[#7C5CFC]/20 shadow-2xl relative animate-scaleUp max-h-[85vh] flex flex-col">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg sm:max-w-xl w-full p-4 sm:p-6 pb-safe border border-[#7C5CFC]/20 shadow-2xl relative animate-scaleUp max-h-[85vh] flex flex-col">
             <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#7C5CFC]/10 mb-3 sm:mb-4">
               <h3 className="text-sm sm:text-base font-bold text-[#34245C]">
-                Question Navigator ({totalQuestions} Total)
+                Question Navigator ({totalQuestions} Total · {Object.keys(userAnswers).length} Answered)
               </h3>
               <button
                 onClick={() => setIsGridModalOpen(false)}
@@ -296,7 +296,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
               </button>
             </div>
 
-            <div className="grid grid-cols-5 gap-2 max-h-72 overflow-y-auto p-1">
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2 max-h-80 sm:max-h-96 overflow-y-auto p-1">
               {questions.map((_, idx) => {
                 const answered = userAnswers[idx] !== undefined;
                 const isCurrent = idx === currentIndex;

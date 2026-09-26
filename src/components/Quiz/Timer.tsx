@@ -40,9 +40,15 @@ export const Timer: React.FC<TimerProps> = ({
     return () => clearInterval(interval);
   }, [secondsRemaining, isPaused, onTimeUp]);
 
-  const minutes = Math.floor(secondsRemaining / 60);
+  const hours = Math.floor(secondsRemaining / 3600);
+  const minutes = Math.floor((secondsRemaining % 3600) / 60);
   const seconds = secondsRemaining % 60;
   const isUrgent = secondsRemaining < 60;
+
+  const formattedTime =
+    hours > 0
+      ? `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+      : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
   return (
     <div
@@ -54,9 +60,7 @@ export const Timer: React.FC<TimerProps> = ({
       title="Remaining time"
     >
       <Clock className={`w-3.5 h-3.5 ${isUrgent ? 'text-[#E87575]' : 'text-[#7C5CFC]'}`} />
-      <span>
-        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-      </span>
+      <span>{formattedTime}</span>
     </div>
   );
 };
