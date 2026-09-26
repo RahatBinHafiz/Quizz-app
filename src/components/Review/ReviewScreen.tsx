@@ -67,8 +67,8 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = ({
           <h2 className="text-2xl font-extrabold text-[#34245C]">
             Answer Review
           </h2>
-          <span className="text-xs text-[#817A91]">
-            {result.category} · Score: {result.scorePercentage}% ({result.correctCount}/{result.totalQuestions})
+          <span className="text-xs text-[#817A91] block mt-0.5">
+            {result.category} · প্রাপ্ত নম্বর (Marks): <strong className="text-[#7C5CFC] font-bold font-mono-numbers">{result.correctCount}/{result.totalQuestions}</strong> ({result.scorePercentage}%)
           </span>
         </div>
 

@@ -147,10 +147,10 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
     );
   }
 
-  // Does this question reveal the answer right now?
-  // In instantFeedback mode: immediately when answered.
-  const isRevealed = config.instantFeedback && isAnswered;
-  const isCorrect = selectedOption === currentQuestion.correctAnswer;
+  // Real Exam Mode: Answers and explanations are NEVER shown during the exam!
+  // All marks, correct/wrong status, and explanations are shown at the end on the Result & Review screen.
+  const isRevealed = false;
+  const isCorrect = false;
 
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-8 pb-24 sm:pb-8">
@@ -211,25 +211,9 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
             <span>{currentQuestion.difficulty}</span>
           </div>
 
-          {config.instantFeedback && isAnswered && (
-            <div
-              className={`flex items-center gap-1 text-xs font-bold ${
-                isCorrect ? 'text-[#55B88A]' : 'text-[#E87575]'
-              }`}
-            >
-              {isCorrect ? (
-                <>
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Correct!</span>
-                </>
-              ) : (
-                <>
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                  <span>Incorrect</span>
-                </>
-              )}
-            </div>
-          )}
+          <div className="text-xs font-semibold text-[#817A91]">
+            Question {currentIndex + 1} of {totalQuestions}
+          </div>
         </div>
 
         {/* Question Text */}
@@ -245,26 +229,14 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
               index={optIdx}
               text={optionText}
               isSelected={selectedOption === optIdx}
-              isAnswerSubmitted={isRevealed}
-              isCorrect={isCorrect}
-              isCorrectOption={optIdx === currentQuestion.correctAnswer}
+              isAnswerSubmitted={false}
+              isCorrect={false}
+              isCorrectOption={false}
               onSelect={handleSelectOption}
+              disabled={false}
             />
           ))}
         </div>
-
-        {/* Instant Feedback Explanation Box */}
-        {isRevealed && currentQuestion.explanation && (
-          <div className="mt-4 sm:mt-6 p-3.5 sm:p-4 rounded-2xl bg-[#FFFDF7] border border-[#7C5CFC]/20 text-xs sm:text-sm text-[#34245C] animate-fadeIn">
-            <div className="flex items-center gap-1.5 font-bold text-[#7C5CFC] mb-1">
-              <Sparkles className="w-4 h-4 text-[#FFD84D]" />
-              <span>Explanation:</span>
-            </div>
-            <p className="text-[#2D2640] leading-relaxed">
-              {currentQuestion.explanation}
-            </p>
-          </div>
-        )}
       </div>
 
       {/* Quiz Controls: Fixed Floating on Mobile, Embedded on Desktop */}
@@ -303,7 +275,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
               : 'bg-[#7C5CFC] hover:bg-[#6949EB] shadow-[#7C5CFC]/25'
           }`}
         >
-          <span>{isFinalQuestion ? 'Finish Quiz' : 'Next'}</span>
+          <span>{isFinalQuestion ? 'Submit Exam & View Marks' : 'Next Question'}</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
@@ -336,13 +308,13 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
                       isCurrent
                         ? 'border-[#7C5CFC] bg-[#7C5CFC] text-white ring-2 ring-[#FFD84D]'
                         : answered
-                        ? 'border-[#55B88A]/40 bg-[#EBF8F2] text-[#1E4D38]'
+                        ? 'border-[#7C5CFC]/30 bg-[#F0EBFF] text-[#34245C] font-extrabold'
                         : 'border-[#7C5CFC]/15 bg-[#FFFDF7] text-[#817A91] hover:border-[#7C5CFC]'
                     }`}
                   >
                     <span>{idx + 1}</span>
                     <span className="text-[9px] font-normal">
-                      {answered ? '✓' : '—'}
+                      {answered ? '●' : '—'}
                     </span>
                   </button>
                 );
@@ -351,7 +323,7 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
 
             <div className="mt-4 pt-3 border-t border-[#7C5CFC]/10 flex items-center justify-between text-xs text-[#817A91]">
               <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#EBF8F2] border border-[#55B88A]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#F0EBFF] border border-[#7C5CFC]/50" />
                 <span>Answered</span>
               </div>
               <div className="flex items-center gap-1.5">

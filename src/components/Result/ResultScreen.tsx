@@ -136,16 +136,34 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
               {/* Inside score label */}
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#817A91]">
-                  Your Score
+                  Total Marks
                 </span>
-                <span className="text-4xl sm:text-5xl font-extrabold text-[#34245C] font-mono-numbers">
-                  {result.scorePercentage}%
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#34245C] font-mono-numbers">
+                  {result.correctCount} <span className="text-xl sm:text-2xl text-[#817A91]">/ {result.totalQuestions}</span>
                 </span>
-                <span className="text-xs font-semibold text-[#7C5CFC] font-mono-numbers mt-0.5">
-                  {result.correctCount} / {result.totalQuestions}
+                <span className="text-xs font-bold text-[#7C5CFC] font-mono-numbers mt-0.5">
+                  {result.scorePercentage}% Accuracy
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* Prominent Marks & Net Score Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6">
+            <div className="px-4 py-2 rounded-xl bg-[#F0EBFF] border border-[#7C5CFC]/25 text-[#34245C] text-xs sm:text-sm font-bold flex items-center gap-2">
+              <span>🎯 প্রাপ্ত নম্বর (Marks Obtained):</span>
+              <span className="text-[#7C5CFC] font-extrabold font-mono-numbers text-sm sm:text-base">
+                {result.correctCount} / {result.totalQuestions}
+              </span>
+            </div>
+            {result.incorrectCount > 0 && (
+              <div className="px-3.5 py-2 rounded-xl bg-[#FFFDF7] border border-[#817A91]/20 text-[#817A91] text-xs font-semibold flex items-center gap-1.5" title="Admission Test format: 1 mark per correct, -0.25 per wrong">
+                <span>মেডিকেল/এডমিশন নেট মার্ক (-০.২৫):</span>
+                <span className="text-[#34245C] font-bold font-mono-numbers">
+                  {Math.max(0, result.correctCount - result.incorrectCount * 0.25).toFixed(2)}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Metric Breakdown Cards */}

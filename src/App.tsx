@@ -33,7 +33,7 @@ export default function App() {
     questionCount: 10,
     difficulty: 'Mixed',
     timerMinutes: 40,
-    instantFeedback: true,
+    instantFeedback: false,
   });
   const [activeQuizQuestions, setActiveQuizQuestions] = useState<Question[]>([]);
   const [latestResult, setLatestResult] = useState<QuizResult | null>(null);
@@ -89,7 +89,7 @@ export default function App() {
       questionCount: bioList.length > 0 ? bioList.length : 40,
       difficulty: 'Mixed',
       timerMinutes: 40, // 40 minutes timed session
-      instantFeedback: true,
+      instantFeedback: false, // Real Exam Mode: Take all answers, reveal results at the end
       shuffle: false,
     };
     handleStartQuiz(config);

@@ -37,7 +37,7 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const [difficulty, setDifficulty] = useState<Difficulty>('Mixed');
   const [timerOption, setTimerOption] = useState<number | null>(40); // Default timer: 40 minutes
   const [customMinutes, setCustomMinutes] = useState<number>(40);
-  const [instantFeedback, setInstantFeedback] = useState<boolean>(true);
+  const [instantFeedback, setInstantFeedback] = useState<boolean>(false); // Default to Real Exam Mode (no premature answers)
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(false);
 
   // Dynamic question counts including 40
@@ -363,14 +363,16 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
             )}
           </div>
 
-          {/* Section 5: Learning Mode Toggle */}
+          {/* Section 5: Real Exam Mode Notice */}
           <div className="pt-2 border-t border-[#7C5CFC]/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <span className="text-sm font-bold text-[#34245C] block">
-                Instant Feedback Mode
+                {instantFeedback ? 'Practice Mode (Instant Feedback)' : 'Real Exam Mode (Standard)'}
               </span>
               <span className="text-xs text-[#817A91] block">
-                Show immediate correct/incorrect color indicators and explanations upon answering.
+                {instantFeedback
+                  ? 'Shows right/wrong answers and explanations immediately after answering.'
+                  : 'Takes your answers quietly. Total marks, right/wrong answers, and explanations are shown at the end.'}
               </span>
             </div>
 
