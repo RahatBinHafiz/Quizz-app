@@ -75,13 +75,13 @@ export default function App() {
       category: categoryName,
       questionCount: categoryName === 'Biology' ? 50 : Math.min(20, count),
       difficulty: 'Mixed',
-      timerMinutes: categoryName === 'Biology' ? 50 : 30,
+      timerMinutes: categoryName === 'Biology' ? 50 : 30, // 50 minutes for 50 questions
       shuffle: false,
     }));
     setCurrentScreen('setup');
   };
 
-  // Quick start Best 50 Biology questions in sequence with 50 minutes timer
+  // Quick start all 50 Biology questions with 50 minutes timer
   const handleStartAllBiology = () => {
     const bioList = allQuestions.filter((q) => q.category === 'Biology');
     const config: QuizConfig = {
@@ -251,7 +251,7 @@ export default function App() {
               />
             </div>
 
-            {/* Featured Biology Best 50 Question Set Card */}
+            {/* Featured Biology 50-Question Set Card */}
             <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#FFF4C2]/50 via-white to-[#F0EBFF]/60 border-2 border-[#7C5CFC]/25 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/20">
@@ -260,7 +260,7 @@ export default function App() {
                 <div>
                   <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
                     <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
-                      সেরা ৫০টি প্রশ্ন (Best 50 MCQs)
+                      সেরা ৫০টি প্রশ্ন (50 MCQs)
                     </span>
                     <span className="px-2 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
                       ⏱ ৫০ মিনিট (50 Mins)
@@ -268,10 +268,10 @@ export default function App() {
                     <span className="text-[11px] sm:text-xs text-[#817A91] hidden sm:inline">আবুল হাসান স্যার · অধ্যায় ১</span>
                   </div>
                   <h3 className="text-base sm:text-xl font-bold text-[#34245C] leading-snug">
-                    জীববিজ্ঞান ১ম পত্র: কোষ ও এর গঠন (Best 50 Selected MCQs)
+                    জীববিজ্ঞান ১ম পত্র: কোষ ও এর গঠন (সাইটোপ্লাজম ও অঙ্গাণু - ৫০টি MCQ)
                   </h3>
                   <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
-                    মেডিকেল ও বোর্ড পরীক্ষার জন্য সর্বাধিক গুরুত্বপূর্ণ ৫০টি প্রশ্ন: কোষতত্ত্ব, অঙ্গাণু, ক্রোমোজোম, কোষ প্রাচীর ও ফ্লুইড-মোজাইক মডেল।
+                    সাইটোপ্লাজম ও সাইটসল, রাইবোজোম, গলগি বডি, লাইসোজোম, এন্ডোপ্লাজমীয় রেটিকুলাম, মাইটোকন্ড্রিয়া, ক্লোরোপ্লাস্ট ও প্লাষ্টিড, সেন্ট্রিওল ও সাইটোস্কেলেটন, পারঅক্সিজোম ও নিউক্লিয়াস।
                   </p>
                 </div>
               </div>
@@ -281,7 +281,7 @@ export default function App() {
                   onClick={handleStartAllBiology}
                   className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
                 >
-                  <span>Start Best 50 Questions (50m)</span>
+                  <span>Start 50 Questions Exam (50m)</span>
                   <span aria-hidden="true">→</span>
                 </button>
                 <button
