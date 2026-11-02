@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Question, QuestionDifficulty } from '../types/quiz';
 import { CATEGORIES } from '../data/questionBank';
+import { FormattedQuestionText } from './FormattedQuestionText';
 
 interface QuestionBankModalProps {
   questions: Question[];
@@ -515,9 +516,12 @@ export const QuestionBankModal: React.FC<QuestionBankModalProps> = ({
                       )}
                     </div>
 
-                    <p className="text-sm font-bold text-[#2D2640] mb-2.5">
-                      {q.question}
-                    </p>
+                    <div className="mb-2.5">
+                      <FormattedQuestionText
+                        text={q.question}
+                        className="text-sm font-bold text-[#2D2640] leading-snug"
+                      />
+                    </div>
 
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       {q.options.map((opt, optI) => (

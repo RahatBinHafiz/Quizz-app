@@ -1,6 +1,19 @@
 import { Question, QuizCategory } from '../types/quiz';
+import { ICT_50_QUESTIONS } from './ictQuestions';
 
 export const CATEGORIES: QuizCategory[] = [
+  {
+    id: 'ICT MCQ',
+    name: 'ICT MCQ',
+    icon: 'Code2',
+    description: 'এইচএসসি আইসিটি: অধ্যায় ৫ প্রোগ্রামিং ভাষা ও সি (৫০টি গুরুত্বপূর্ণ MCQ) | সময়: ৫০ মিনিট।',
+  },
+  {
+    id: 'Biology',
+    name: 'Biology',
+    icon: 'Dna',
+    description: 'কোষ ও এর গঠন (আবুল হাসান স্যার): সাইটোপ্লাজম ও সাইটোপ্লাজমীয় অঙ্গাণু (৫০টি MCQ) | সময়: ৫০ মিনিট।',
+  },
   {
     id: 'General Knowledge',
     name: 'General Knowledge',
@@ -24,18 +37,6 @@ export const CATEGORIES: QuizCategory[] = [
     name: 'Science',
     icon: 'Atom',
     description: 'Physics, chemistry, astronomy, and earth sciences.',
-  },
-  {
-    id: 'Biology',
-    name: 'Biology',
-    icon: 'Dna',
-    description: 'কোষ ও এর গঠন (আবুল হাসান স্যার): সাইটোপ্লাজম ও সাইটোপ্লাজমীয় অঙ্গাণু (৫০টি MCQ) | সময়: ৫০ মিনিট।',
-  },
-  {
-    id: 'ICT',
-    name: 'ICT',
-    icon: 'Wifi',
-    description: 'Information & communications technology, networking, and cloud services.',
   },
   {
     id: 'English',
@@ -1106,4 +1107,5 @@ export const INITIAL_QUESTION_BANK: Question[] = [
     explanation: 'উদ্ভিদকোষের সাইটোপ্লাজমে ছড়ানো গলগি বডির চ্যাপ্টা সিস্টার্নি খণ্ডগুলোকে ডিক্টয়োসোম (Dictyosome) বলে।',
     difficulty: 'Easy',
   },
+  ...ICT_50_QUESTIONS,
 ];

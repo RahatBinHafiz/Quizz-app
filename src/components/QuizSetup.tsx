@@ -29,15 +29,16 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const availableCount = totalAvailableInCategory(selectedCategory);
   
-  // Default to 50 for Biology (or availableCount if smaller), otherwise 10
+  // Default to 50 for Biology or ICT MCQ (or availableCount if smaller), otherwise 10
+  const isSpecial50 = initialCategory === 'Biology' || initialCategory === 'ICT MCQ';
   const [questionCount, setQuestionCount] = useState<number>(() => {
-    if (initialCategory === 'Biology') return 50;
+    if (isSpecial50) return 50;
     return 10;
   });
   const [difficulty, setDifficulty] = useState<Difficulty>('Mixed');
   const [timerOption, setTimerOption] = useState<number | null>(() => {
-    return initialCategory === 'Biology' ? 50 : 30;
-  }); // Default timer: 50 minutes for Biology 50 Qs
+    return isSpecial50 ? 50 : 30;
+  }); // Default timer: 50 minutes for 50 Qs
   const [customMinutes, setCustomMinutes] = useState<number>(50);
   const [instantFeedback, setInstantFeedback] = useState<boolean>(false); // Default to Real Exam Mode (no premature answers)
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(false);
@@ -57,7 +58,7 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const handleCategoryChange = (catName: string) => {
     setSelectedCategory(catName);
     const count = totalAvailableInCategory(catName);
-    if (catName === 'Biology') {
+    if (catName === 'Biology' || catName === 'ICT MCQ') {
       setQuestionCount(50);
       setShuffleQuestions(false);
       setTimerOption(50);

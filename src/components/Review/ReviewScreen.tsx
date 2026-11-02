@@ -12,6 +12,7 @@ import {
   Filter,
 } from 'lucide-react';
 import { QuizResult } from '../../types/quiz';
+import { FormattedQuestionText } from '../FormattedQuestionText';
 
 interface ReviewScreenProps {
   result: QuizResult;
@@ -165,30 +166,33 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = ({
 
                   <div className="flex items-center gap-2">
                     {isCorrect && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#55B88A] bg-[#EBF8F2] px-2.5 py-1 rounded-lg">
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Correct</span>
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#1E4D38] bg-[#EBF8F2] border border-[#55B88A]/30 px-2.5 py-1 rounded-lg">
+                        <Check className="w-3.5 h-3.5 text-[#55B88A]" />
+                        <span>+১.০ মার্ক (সঠিক)</span>
                       </span>
                     )}
                     {isIncorrect && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#E87575] bg-[#FDF1F1] px-2.5 py-1 rounded-lg">
-                        <X className="w-3.5 h-3.5" />
-                        <span>Incorrect</span>
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#692525] bg-[#FDF1F1] border border-[#E87575]/30 px-2.5 py-1 rounded-lg">
+                        <X className="w-3.5 h-3.5 text-[#E87575]" />
+                        <span>০.০ মার্ক (ভুল)</span>
                       </span>
                     )}
                     {isUnanswered && (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#817A91] bg-slate-100 px-2.5 py-1 rounded-lg">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-[#817A91] bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg">
                         <MinusCircle className="w-3.5 h-3.5" />
-                        <span>Unanswered</span>
+                        <span>০.০ মার্ক (উত্তরহীন)</span>
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Question Title */}
-                <h3 className="text-base sm:text-lg font-bold text-[#2D2640] mb-4 leading-snug">
-                  {q.question}
-                </h3>
+                {/* Question Title & Code Block */}
+                <div className="mb-4">
+                  <FormattedQuestionText
+                    text={q.question}
+                    className="text-base sm:text-lg font-bold text-[#2D2640] leading-snug"
+                  />
+                </div>
 
                 {/* 4 Options */}
                 <div className="space-y-2.5 mb-5">

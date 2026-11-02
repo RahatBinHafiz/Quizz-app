@@ -14,6 +14,7 @@ import { Question, QuizConfig, QuizResult, UserAnswer } from '../../types/quiz';
 import { ProgressBar } from './ProgressBar';
 import { Timer } from './Timer';
 import { AnswerOption } from './AnswerOption';
+import { FormattedQuestionText } from '../FormattedQuestionText';
 
 interface QuizScreenProps {
   questions: Question[];
@@ -217,9 +218,12 @@ export const QuizScreen: React.FC<QuizScreenProps> = ({
         </div>
 
         {/* Question Text */}
-        <h2 className="text-base sm:text-xl md:text-2xl font-bold text-[#2D2640] leading-snug tracking-tight mb-4 sm:mb-6">
-          {currentQuestion.question}
-        </h2>
+        <div className="mb-4 sm:mb-6">
+          <FormattedQuestionText
+            text={currentQuestion.question}
+            className="text-base sm:text-xl md:text-2xl font-bold text-[#2D2640] leading-snug tracking-tight"
+          />
+        </div>
 
         {/* Exactly 4 Answer Options */}
         <div className="space-y-2.5 sm:space-y-3.5">

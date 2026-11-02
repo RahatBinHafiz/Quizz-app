@@ -37,7 +37,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
       case 'Biology':
         return <Dna className="w-5 h-5 text-[#7C5CFC]" />;
       case 'ICT':
-        return <Wifi className="w-5 h-5 text-[#7C5CFC]" />;
+      case 'ICT MCQ':
+        return <Code2 className="w-5 h-5 text-[#7C5CFC]" />;
       case 'English':
         return <BookOpen className="w-5 h-5 text-[#7C5CFC]" />;
       case 'Programming':

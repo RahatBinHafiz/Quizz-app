@@ -40,9 +40,9 @@ export default function App() {
 
   // Initialize questions and user statistics
   useEffect(() => {
-    // Clear any previous custom questions that belonged to Biology
+    // Clear any previous custom questions that belonged to Biology or ICT MCQ
     try {
-      const custom = StorageService.getCustomQuestions().filter((q) => q.category !== 'Biology');
+      const custom = StorageService.getCustomQuestions().filter((q) => q.category !== 'Biology' && q.category !== 'ICT MCQ' && q.category !== 'ICT');
       localStorage.setItem('mcq_master_custom_questions_v1', JSON.stringify(custom));
     } catch {}
 
@@ -70,15 +70,30 @@ export default function App() {
   // Start Setup flow with specific category
   const handleSelectCategory = (categoryName: string) => {
     const count = totalAvailableInCategory(categoryName);
+    const isSpecial50 = categoryName === 'Biology' || categoryName === 'ICT MCQ';
     setQuizConfig((prev) => ({
       ...prev,
       category: categoryName,
-      questionCount: categoryName === 'Biology' ? 50 : Math.min(20, count),
+      questionCount: isSpecial50 ? 50 : Math.min(20, count),
       difficulty: 'Mixed',
-      timerMinutes: categoryName === 'Biology' ? 50 : 30, // 50 minutes for 50 questions
+      timerMinutes: isSpecial50 ? 50 : 30, // 50 minutes for 50 questions
       shuffle: false,
     }));
     setCurrentScreen('setup');
+  };
+
+  // Quick start all 50 ICT MCQ questions with 50 minutes timer
+  const handleStartAllICT = () => {
+    const ictList = allQuestions.filter((q) => q.category === 'ICT MCQ');
+    const config: QuizConfig = {
+      category: 'ICT MCQ',
+      questionCount: ictList.length > 0 ? ictList.length : 50,
+      difficulty: 'Mixed',
+      timerMinutes: 50, // 50 minutes timed exam session (1 min per question)
+      instantFeedback: false, // Strict Exam Mode: Complete all 50 answers, reveal results at the end
+      shuffle: false,
+    };
+    handleStartQuiz(config);
   };
 
   // Quick start all 50 Biology questions with 50 minutes timer
@@ -251,45 +266,92 @@ export default function App() {
               />
             </div>
 
-            {/* Featured Biology 50-Question Set Card */}
-            <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#FFF4C2]/50 via-white to-[#F0EBFF]/60 border-2 border-[#7C5CFC]/25 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/20">
-                  <span className="text-xl sm:text-2xl">🧬</span>
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
-                    <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
-                      সেরা ৫০টি প্রশ্ন (50 MCQs)
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
-                      ⏱ ৫০ মিনিট (50 Mins)
-                    </span>
-                    <span className="text-[11px] sm:text-xs text-[#817A91] hidden sm:inline">আবুল হাসান স্যার · অধ্যায় ১</span>
+            {/* Featured Exams Section */}
+            <div className="space-y-4">
+              {/* Featured 1: ICT MCQ Exam */}
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E8F1FF] via-white to-[#F0EBFF] border-2 border-[#7C5CFC]/30 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/25">
+                    <span className="text-xl sm:text-2xl">💻</span>
                   </div>
-                  <h3 className="text-base sm:text-xl font-bold text-[#34245C] leading-snug">
-                    জীববিজ্ঞান ১ম পত্র: কোষ ও এর গঠন (সাইটোপ্লাজম ও অঙ্গাণু - ৫০টি MCQ)
-                  </h3>
-                  <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
-                    সাইটোপ্লাজম ও সাইটসল, রাইবোজোম, গলগি বডি, লাইসোজোম, এন্ডোপ্লাজমীয় রেটিকুলাম, মাইটোকন্ড্রিয়া, ক্লোরোপ্লাস্ট ও প্লাষ্টিড, সেন্ট্রিওল ও সাইটোস্কেলেটন, পারঅক্সিজোম ও নিউক্লিয়াস।
-                  </p>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
+                        নতুন পরীক্ষা (New Exam) · ৫০টি প্রশ্ন
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
+                        ⏱ ৫০ মিনিট (50 Mins)
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-semibold text-[#7C5CFC]">
+                        এইচএসসি আইসিটি · অধ্যায় ৫
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-xl font-extrabold text-[#34245C] leading-snug">
+                      ICT MCQ: প্রোগ্রামিং ভাষা ও সি প্রোগ্রামিং (৫০টি গুরুত্বপূর্ণ বহুনির্বাচনী প্রশ্ন)
+                    </h3>
+                    <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
+                      মেশিন ভাষা, অনুবাদক প্রোগ্রাম (কম্পাইলার, ইন্টারপ্রেটার, অ্যাসেম্বলার), ফ্লোচার্ট প্রতীক, C ভাষার বৈশিষ্ট্য, চলক ও ডেটা টাইপ, অপারেটর, লুপ, অ্যারে, এবং ফাংশন।
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0">
+                  <button
+                    onClick={handleStartAllICT}
+                    className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Start ICT MCQ Exam (50m)</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                  <button
+                    onClick={() => handleSelectCategory('ICT MCQ')}
+                    className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Customize</span>
+                  </button>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0">
-                <button
-                  onClick={handleStartAllBiology}
-                  className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
-                >
-                  <span>Start 50 Questions Exam (50m)</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-                <button
-                  onClick={() => handleSelectCategory('Biology')}
-                  className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
-                >
-                  <span>Customize</span>
-                </button>
+              {/* Featured 2: Biology 50-Question Set Card */}
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#FFF4C2]/50 via-white to-[#F0EBFF]/60 border-2 border-[#7C5CFC]/20 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#7C5CFC] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#7C5CFC]/20">
+                    <span className="text-xl sm:text-2xl">🧬</span>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
+                      <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
+                        সেরা ৫০টি প্রশ্ন (50 MCQs)
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
+                        ⏱ ৫০ মিনিট (50 Mins)
+                      </span>
+                      <span className="text-[11px] sm:text-xs text-[#817A91] hidden sm:inline">আবুল হাসান স্যার · অধ্যায় ১</span>
+                    </div>
+                    <h3 className="text-base sm:text-xl font-bold text-[#34245C] leading-snug">
+                      জীববিজ্ঞান ১ম পত্র: কোষ ও এর গঠন (সাইটোপ্লাজম ও অঙ্গাণু - ৫০টি MCQ)
+                    </h3>
+                    <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
+                      সাইটোপ্লাজম ও সাইটসল, রাইবোজোম, গলগি বডি, লাইসোজোম, এন্ডোপ্লাজমীয় রেটিকুলাম, মাইটোকন্ড্রিয়া, ক্লোরোপ্লাস্ট ও প্লাষ্টিড, সেন্ট্রিওল ও সাইটোস্কেলেটন, পারঅক্সিজোম ও নিউক্লিয়াস।
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0">
+                  <button
+                    onClick={handleStartAllBiology}
+                    className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Start Biology Exam (50m)</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                  <button
+                    onClick={() => handleSelectCategory('Biology')}
+                    className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Customize</span>
+                  </button>
+                </div>
               </div>
             </div>
 
