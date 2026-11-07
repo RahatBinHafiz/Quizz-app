@@ -1,7 +1,14 @@
 import { Question, QuizCategory } from '../types/quiz';
 import { ICT_50_QUESTIONS } from './ictQuestions';
+import { ICT_DBMS_25_QUESTIONS } from './ictDbmsQuestions';
 
 export const CATEGORIES: QuizCategory[] = [
+  {
+    id: 'ICT DBMS MCQ',
+    name: 'ICT DBMS MCQ',
+    icon: 'Database',
+    description: 'এইচএসসি আইসিটি: অধ্যায় ৬ ডেটাবেজ ম্যানেজমেন্ট সিস্টেম - DBMS (২৫টি গুরুত্বপূর্ণ MCQ) | সময়: ২৫ মিনিট।',
+  },
   {
     id: 'ICT MCQ',
     name: 'ICT MCQ',
@@ -1108,4 +1115,5 @@ export const INITIAL_QUESTION_BANK: Question[] = [
     difficulty: 'Easy',
   },
   ...ICT_50_QUESTIONS,
+  ...ICT_DBMS_25_QUESTIONS,
 ];

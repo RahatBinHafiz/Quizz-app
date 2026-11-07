@@ -29,27 +29,32 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const availableCount = totalAvailableInCategory(selectedCategory);
   
-  // Default to 50 for Biology or ICT MCQ (or availableCount if smaller), otherwise 10
+  // Default to 50 for Biology / ICT MCQ, 25 for ICT DBMS MCQ, otherwise 10
   const isSpecial50 = initialCategory === 'Biology' || initialCategory === 'ICT MCQ';
+  const isSpecial25 = initialCategory === 'ICT DBMS MCQ';
   const [questionCount, setQuestionCount] = useState<number>(() => {
     if (isSpecial50) return 50;
+    if (isSpecial25) return 25;
     return 10;
   });
   const [difficulty, setDifficulty] = useState<Difficulty>('Mixed');
   const [timerOption, setTimerOption] = useState<number | null>(() => {
-    return isSpecial50 ? 50 : 30;
-  }); // Default timer: 50 minutes for 50 Qs
-  const [customMinutes, setCustomMinutes] = useState<number>(50);
+    if (isSpecial50) return 50;
+    if (isSpecial25) return 25;
+    return 30;
+  });
+  const [customMinutes, setCustomMinutes] = useState<number>(25);
   const [instantFeedback, setInstantFeedback] = useState<boolean>(false); // Default to Real Exam Mode (no premature answers)
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(false);
 
-  // Dynamic question counts including 50
-  const baseCountOptions = [10, 20, 30, 40, 50];
+  // Dynamic question counts including 25 & 50
+  const baseCountOptions = [10, 20, 25, 30, 40, 50];
   const difficultyOptions: Difficulty[] = ['Easy', 'Medium', 'Hard', 'Mixed'];
   const timerPresets = [
-    { label: '50 Mins (Default)', value: 50 },
+    { label: '50 Mins', value: 50 },
     { label: '40 Mins', value: 40 },
     { label: '30 Mins', value: 30 },
+    { label: '25 Mins (Default)', value: 25 },
     { label: '20 Mins', value: 20 },
     { label: 'No Timer', value: null },
     { label: 'Custom', value: -1 },
@@ -62,6 +67,10 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
       setQuestionCount(50);
       setShuffleQuestions(false);
       setTimerOption(50);
+    } else if (catName === 'ICT DBMS MCQ') {
+      setQuestionCount(25);
+      setShuffleQuestions(false);
+      setTimerOption(25);
     } else if (questionCount > count) {
       setQuestionCount(count);
     }

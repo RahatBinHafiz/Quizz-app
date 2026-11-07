@@ -40,9 +40,11 @@ export default function App() {
 
   // Initialize questions and user statistics
   useEffect(() => {
-    // Clear any previous custom questions that belonged to Biology or ICT MCQ
+    // Clear any previous custom questions that belonged to Biology, ICT MCQ, or ICT DBMS MCQ
     try {
-      const custom = StorageService.getCustomQuestions().filter((q) => q.category !== 'Biology' && q.category !== 'ICT MCQ' && q.category !== 'ICT');
+      const custom = StorageService.getCustomQuestions().filter(
+        (q) => q.category !== 'Biology' && q.category !== 'ICT MCQ' && q.category !== 'ICT' && q.category !== 'ICT DBMS MCQ'
+      );
       localStorage.setItem('mcq_master_custom_questions_v1', JSON.stringify(custom));
     } catch {}
 
@@ -71,15 +73,33 @@ export default function App() {
   const handleSelectCategory = (categoryName: string) => {
     const count = totalAvailableInCategory(categoryName);
     const isSpecial50 = categoryName === 'Biology' || categoryName === 'ICT MCQ';
+    const isSpecial25 = categoryName === 'ICT DBMS MCQ';
+    const qCount = isSpecial50 ? 50 : isSpecial25 ? 25 : Math.min(20, count);
+    const tMinutes = isSpecial50 ? 50 : isSpecial25 ? 25 : 30;
+
     setQuizConfig((prev) => ({
       ...prev,
       category: categoryName,
-      questionCount: isSpecial50 ? 50 : Math.min(20, count),
+      questionCount: qCount,
       difficulty: 'Mixed',
-      timerMinutes: isSpecial50 ? 50 : 30, // 50 minutes for 50 questions
+      timerMinutes: tMinutes,
       shuffle: false,
     }));
     setCurrentScreen('setup');
+  };
+
+  // Quick start all 25 ICT DBMS MCQ questions with 25 minutes timer
+  const handleStartAllICTDBMS = () => {
+    const dbmsList = allQuestions.filter((q) => q.category === 'ICT DBMS MCQ');
+    const config: QuizConfig = {
+      category: 'ICT DBMS MCQ',
+      questionCount: dbmsList.length > 0 ? dbmsList.length : 25,
+      difficulty: 'Mixed',
+      timerMinutes: 25, // 25 minutes timed exam session (1 min per question)
+      instantFeedback: false, // Strict Exam Mode: Complete all 25 answers, reveal results at the end
+      shuffle: false,
+    };
+    handleStartQuiz(config);
   };
 
   // Quick start all 50 ICT MCQ questions with 50 minutes timer
@@ -268,6 +288,50 @@ export default function App() {
 
             {/* Featured Exams Section */}
             <div className="space-y-4">
+              {/* Featured 0: ICT DBMS MCQ Exam (25 Questions) */}
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E6F9F0] via-white to-[#F0EBFF] border-2 border-[#55B88A]/35 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#1E4D38] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#1E4D38]/20">
+                    <span className="text-xl sm:text-2xl">🗄️</span>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/30 text-[10px] sm:text-[11px] font-bold">
+                        নতুন পরীক্ষা (New Exam) · ২৫টি প্রশ্ন
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
+                        ⏱ ২৫ মিনিট (25 Mins)
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-semibold text-[#55B88A]">
+                        এইচএসসি আইসিটি · অধ্যায় ৬: ডেটাবেজ (DBMS)
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-xl font-extrabold text-[#34245C] leading-snug">
+                      ICT DBMS MCQ: ডেটাবেজ ম্যানেজমেন্ট সিস্টেম (২৫টি গুরুত্বপূর্ণ প্রশ্ন)
+                    </h3>
+                    <p className="text-xs text-[#817A91] mt-0.5 line-clamp-2 sm:line-clamp-none">
+                      ডেটা ও ইনফরমেশন, প্রাইমারি কি, ফরেন কি ও কম্পোজিট কি, রিলেশনশিপ (1:1, M:M), হায়ারার্কিক্যাল ও নেটওয়ার্ক মডেল, SQL DDL ও DML (CREATE, SELECT, DROP, INSERT), ফিল্ড ও ডেটা টাইপ।
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0">
+                  <button
+                    onClick={handleStartAllICTDBMS}
+                    className="px-5 py-3 rounded-xl bg-[#55B88A] hover:bg-[#469e76] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#55B88A]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Start DBMS Exam (25m)</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                  <button
+                    onClick={() => handleSelectCategory('ICT DBMS MCQ')}
+                    className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#55B88A]/25 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Customize</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Featured 1: ICT MCQ Exam */}
               <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E8F1FF] via-white to-[#F0EBFF] border-2 border-[#7C5CFC]/30 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">

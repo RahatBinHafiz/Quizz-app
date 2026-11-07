@@ -8,6 +8,7 @@ import {
   Wifi,
   BookOpen,
   Code2,
+  Database,
   Sparkles,
   ArrowRight,
 } from 'lucide-react';
@@ -26,6 +27,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   const getIcon = () => {
     switch (category.name) {
+      case 'ICT DBMS MCQ':
+        return <Database className="w-5 h-5 text-[#7C5CFC]" />;
       case 'General Knowledge':
         return <Globe className="w-5 h-5 text-[#7C5CFC]" />;
       case 'Computer Science':
