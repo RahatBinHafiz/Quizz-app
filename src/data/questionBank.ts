@@ -1,8 +1,15 @@
 import { Question, QuizCategory } from '../types/quiz';
 import { ICT_50_QUESTIONS } from './ictQuestions';
 import { ICT_DBMS_25_QUESTIONS } from './ictDbmsQuestions';
+import { ICT_200_QUESTIONS } from './ict200Questions';
 
 export const CATEGORIES: QuizCategory[] = [
+  {
+    id: 'HSC ICT 200 MCQ',
+    name: 'HSC ICT 200 MCQ',
+    icon: 'Award',
+    description: 'এইচএসসি আইসিটি: বোর্ড পরীক্ষার জন্য ২০০ গুরুত্বপূর্ণ বহুনির্বাচনি প্রশ্ন (অধ্যায় ২, ৪, ৫ ও ৬) | সম্পূর্ণ সেট।',
+  },
   {
     id: 'ICT DBMS MCQ',
     name: 'ICT DBMS MCQ',
@@ -1116,4 +1123,5 @@ export const INITIAL_QUESTION_BANK: Question[] = [
   },
   ...ICT_50_QUESTIONS,
   ...ICT_DBMS_25_QUESTIONS,
+  ...ICT_200_QUESTIONS,
 ];

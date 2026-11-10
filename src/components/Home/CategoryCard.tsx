@@ -9,6 +9,7 @@ import {
   BookOpen,
   Code2,
   Database,
+  Award,
   Sparkles,
   ArrowRight,
 } from 'lucide-react';
@@ -27,6 +28,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   const getIcon = () => {
     switch (category.name) {
+      case 'HSC ICT 200 MCQ':
+        return <Award className="w-5 h-5 text-[#7C5CFC]" />;
       case 'ICT DBMS MCQ':
         return <Database className="w-5 h-5 text-[#7C5CFC]" />;
       case 'General Knowledge':

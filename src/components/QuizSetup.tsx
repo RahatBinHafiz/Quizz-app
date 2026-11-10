@@ -29,41 +29,61 @@ export const QuizSetup: React.FC<QuizSetupProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const availableCount = totalAvailableInCategory(selectedCategory);
   
-  // Default to 50 for Biology / ICT MCQ, 25 for ICT DBMS MCQ, otherwise 10
+  // Default to 200 for HSC ICT 200 MCQ, 50 for Biology / ICT MCQ, 25 for ICT DBMS MCQ, otherwise 10
+  const isSpecial200 = initialCategory === 'HSC ICT 200 MCQ';
   const isSpecial50 = initialCategory === 'Biology' || initialCategory === 'ICT MCQ';
   const isSpecial25 = initialCategory === 'ICT DBMS MCQ';
   const [questionCount, setQuestionCount] = useState<number>(() => {
+    if (isSpecial200) return 200;
     if (isSpecial50) return 50;
     if (isSpecial25) return 25;
     return 10;
   });
   const [difficulty, setDifficulty] = useState<Difficulty>('Mixed');
   const [timerOption, setTimerOption] = useState<number | null>(() => {
+    if (isSpecial200) return 100;
     if (isSpecial50) return 50;
     if (isSpecial25) return 25;
     return 30;
   });
-  const [customMinutes, setCustomMinutes] = useState<number>(25);
+  const [customMinutes, setCustomMinutes] = useState<number>(() => (isSpecial200 ? 100 : 25));
   const [instantFeedback, setInstantFeedback] = useState<boolean>(false); // Default to Real Exam Mode (no premature answers)
   const [shuffleQuestions, setShuffleQuestions] = useState<boolean>(false);
 
-  // Dynamic question counts including 25 & 50
-  const baseCountOptions = [10, 20, 25, 30, 40, 50];
+  // Dynamic question counts including 25, 50, 100, 200
+  const baseCountOptions =
+    selectedCategory === 'HSC ICT 200 MCQ'
+      ? [25, 50, 100, 200]
+      : [10, 20, 25, 30, 40, 50];
   const difficultyOptions: Difficulty[] = ['Easy', 'Medium', 'Hard', 'Mixed'];
-  const timerPresets = [
-    { label: '50 Mins', value: 50 },
-    { label: '40 Mins', value: 40 },
-    { label: '30 Mins', value: 30 },
-    { label: '25 Mins (Default)', value: 25 },
-    { label: '20 Mins', value: 20 },
-    { label: 'No Timer', value: null },
-    { label: 'Custom', value: -1 },
-  ];
+  const timerPresets =
+    selectedCategory === 'HSC ICT 200 MCQ'
+      ? [
+          { label: '100 Mins (Default)', value: 100 },
+          { label: '120 Mins (2h)', value: 120 },
+          { label: '50 Mins', value: 50 },
+          { label: '25 Mins', value: 25 },
+          { label: 'No Timer', value: null },
+          { label: 'Custom', value: -1 },
+        ]
+      : [
+          { label: '50 Mins', value: 50 },
+          { label: '40 Mins', value: 40 },
+          { label: '30 Mins', value: 30 },
+          { label: '25 Mins', value: 25 },
+          { label: '20 Mins', value: 20 },
+          { label: 'No Timer', value: null },
+          { label: 'Custom', value: -1 },
+        ];
 
   const handleCategoryChange = (catName: string) => {
     setSelectedCategory(catName);
     const count = totalAvailableInCategory(catName);
-    if (catName === 'Biology' || catName === 'ICT MCQ') {
+    if (catName === 'HSC ICT 200 MCQ') {
+      setQuestionCount(200);
+      setShuffleQuestions(false);
+      setTimerOption(100);
+    } else if (catName === 'Biology' || catName === 'ICT MCQ') {
       setQuestionCount(50);
       setShuffleQuestions(false);
       setTimerOption(50);

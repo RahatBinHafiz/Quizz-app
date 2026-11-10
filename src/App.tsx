@@ -40,10 +40,15 @@ export default function App() {
 
   // Initialize questions and user statistics
   useEffect(() => {
-    // Clear any previous custom questions that belonged to Biology, ICT MCQ, or ICT DBMS MCQ
+    // Clear any previous custom questions that belonged to preloaded categories
     try {
       const custom = StorageService.getCustomQuestions().filter(
-        (q) => q.category !== 'Biology' && q.category !== 'ICT MCQ' && q.category !== 'ICT' && q.category !== 'ICT DBMS MCQ'
+        (q) =>
+          q.category !== 'Biology' &&
+          q.category !== 'ICT MCQ' &&
+          q.category !== 'ICT' &&
+          q.category !== 'ICT DBMS MCQ' &&
+          q.category !== 'HSC ICT 200 MCQ'
       );
       localStorage.setItem('mcq_master_custom_questions_v1', JSON.stringify(custom));
     } catch {}
@@ -72,10 +77,11 @@ export default function App() {
   // Start Setup flow with specific category
   const handleSelectCategory = (categoryName: string) => {
     const count = totalAvailableInCategory(categoryName);
+    const isSpecial200 = categoryName === 'HSC ICT 200 MCQ';
     const isSpecial50 = categoryName === 'Biology' || categoryName === 'ICT MCQ';
     const isSpecial25 = categoryName === 'ICT DBMS MCQ';
-    const qCount = isSpecial50 ? 50 : isSpecial25 ? 25 : Math.min(20, count);
-    const tMinutes = isSpecial50 ? 50 : isSpecial25 ? 25 : 30;
+    const qCount = isSpecial200 ? 200 : isSpecial50 ? 50 : isSpecial25 ? 25 : Math.min(20, count);
+    const tMinutes = isSpecial200 ? 100 : isSpecial50 ? 50 : isSpecial25 ? 25 : 30;
 
     setQuizConfig((prev) => ({
       ...prev,
@@ -86,6 +92,20 @@ export default function App() {
       shuffle: false,
     }));
     setCurrentScreen('setup');
+  };
+
+  // Quick start all 200 HSC ICT questions with 100 minutes timer
+  const handleStartAllICT200 = () => {
+    const list = allQuestions.filter((q) => q.category === 'HSC ICT 200 MCQ');
+    const config: QuizConfig = {
+      category: 'HSC ICT 200 MCQ',
+      questionCount: list.length > 0 ? list.length : 200,
+      difficulty: 'Mixed',
+      timerMinutes: 100, // 100 minutes timed exam session (1h 40m)
+      instantFeedback: false,
+      shuffle: false,
+    };
+    handleStartQuiz(config);
   };
 
   // Quick start all 25 ICT DBMS MCQ questions with 25 minutes timer
@@ -288,6 +308,51 @@ export default function App() {
 
             {/* Featured Exams Section */}
             <div className="space-y-4">
+              {/* Featured: HSC ICT 200 MCQ Mega Board Exam */}
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#FFF4C2]/60 via-[#FDF8EA] to-[#F0EBFF] border-2 border-[#7C5CFC]/40 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#FFD84D]/20 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex items-start sm:items-center gap-3 sm:gap-3.5 relative z-10">
+                  <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#7C5CFC] to-[#4F2FD4] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#7C5CFC]/30">
+                    <span className="text-2xl sm:text-3xl">🏆</span>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 sm:mb-0.5">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#EBF8F2] text-[#1E4D38] border border-[#55B88A]/35 text-[10px] sm:text-[11px] font-bold">
+                        বোর্ড পরীক্ষার সম্পূর্ণ সেট (200 MCQs)
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#FFF4C2] text-[#34245C] border border-[#FFD84D]/40 text-[10px] sm:text-[11px] font-bold font-mono-numbers flex items-center gap-1">
+                        ⏱ ১ ঘণ্টা ৪০ মিনিট (1h 40m / 100 Mins)
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-bold text-[#7C5CFC]">
+                        অধ্যায় ২, ৪, ৫ ও ৬
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-xl font-extrabold text-[#34245C] leading-snug">
+                      এইচএসসি আইসিটি: ২০০ গুরুত্বপূর্ণ বহুনির্বাচনি প্রশ্ন (বোর্ড স্পেশাল টেস্ট)
+                    </h3>
+                    <p className="text-xs text-[#5B5569] mt-0.5 line-clamp-2 sm:line-clamp-none">
+                      কমিউনিকেশন সিস্টেম ও নেটওয়ার্কিং (৫০টি), ওয়েব ডিজাইন ও HTML (৫০টি), C প্রোগ্রামিং ভাষা (৫০টি), এবং ডেটাবেজ ম্যানেজমেন্ট সিস্টেম - DBMS (৫০টি)।
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full md:w-auto shrink-0 relative z-10">
+                  <button
+                    onClick={handleStartAllICT200}
+                    className="px-5 py-3 rounded-xl bg-[#7C5CFC] hover:bg-[#6949EB] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#7C5CFC]/25 transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Start 200 Questions Exam (1h 40m)</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                  <button
+                    onClick={() => handleSelectCategory('HSC ICT 200 MCQ')}
+                    className="px-4 py-3 rounded-xl bg-white hover:bg-[#F0EBFF] text-[#34245C] border border-[#7C5CFC]/20 text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap touch-manipulation min-h-[44px]"
+                  >
+                    <span>Customize</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Featured 0: ICT DBMS MCQ Exam (25 Questions) */}
               <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E6F9F0] via-white to-[#F0EBFF] border-2 border-[#55B88A]/35 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex items-start sm:items-center gap-3 sm:gap-3.5">
